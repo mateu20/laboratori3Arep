@@ -41,12 +41,15 @@ public class HttpSserver {
 		                         clientSocket.getOutputStream(), true);
 		   in = new BufferedReader(
 		                         new InputStreamReader(clientSocket.getInputStream()));
-		   String inputLine, outputLine;
+		   
 		   
 		   StringBuilder stringBuilder = new StringBuilder();
 		   
+		   String inputLine, outputLine;
+		   
+		   Matcher matcher = null;
 		   Pattern pattern = Pattern.compile("GET /([^\\s]+)");
-	       Matcher matcher = null;
+	       
 		   
 		   while ((inputLine = in.readLine()) != null) {
 		      System.out.println("Recibí: " + inputLine);
@@ -65,7 +68,7 @@ public class HttpSserver {
 		    out.close(); 
 		    in.close(); 
 		    clientSocket.close(); 
-		    //serverSocket.close();
+		    
 	   }
   }
   
@@ -92,8 +95,6 @@ public class HttpSserver {
 				byte[] data = new byte[(int) file.length()];
 				fis.read(data);
 				fis.close();
-	                      
-	             // Cabeceras con la info de la imágen
 				DataOutputStream binaryOut = new DataOutputStream(clientSocket.getOutputStream());
 				binaryOut.writeBytes("HTTP/1.0 200 OK\r\n");
 				binaryOut.writeBytes("Content-Type: image/"+ext+"\r\n");
@@ -104,13 +105,7 @@ public class HttpSserver {
 				binaryOut.close();
 	    	  
 	      }
-	      else {/*
-	    	  DataOutputStream binaryOut = new DataOutputStream(clientSocket.getOutputStream());
-				binaryOut.writeBytes("HTTP/1.0 200 OK\r\n");
-				binaryOut.writeBytes("Content-Type: text/html");
-				binaryOut.writeBytes("\r\n\r\n");
-				
-				binaryOut.close();*/
+	      else {
 				  out.println("HTTP/1.1 200 \r\nContent-Type: text/html\r\n\r\n");
 		    	  BufferedReader br = new BufferedReader(new FileReader(file));
 	
