@@ -76,11 +76,11 @@ public class HttpSserver {
 	  
 	  
 	  String path = "src/main/resources/";
-      String ext = FilenameUtils.getExtension(req);
-      if (ext.equals("js")) {
+      String n = FilenameUtils.getExtension(req);
+      if (n.equals("js")) {
     	  path=path+"js/";
     	  
-      }else if (ext.equals("png") || ext.equals("jpg")) {
+      }else if (n.equals("png") || n.equals("jpg")) {
     	  path=path+"img/";
       }
       
@@ -88,7 +88,7 @@ public class HttpSserver {
       File file = new File(path+req);
       
       if (file.exists() && !file.isDirectory()) {
-	      if (ext.equals("png") || ext.equals("jpg")) {
+	      if (n.equals("png") || n.equals("jpg")) {
 	    	  	
 	    	  	
 				FileInputStream fis = new FileInputStream(file);
@@ -97,7 +97,7 @@ public class HttpSserver {
 				fis.close();
 				DataOutputStream binaryOut = new DataOutputStream(clientSocket.getOutputStream());
 				binaryOut.writeBytes("HTTP/1.0 200 OK\r\n");
-				binaryOut.writeBytes("Content-Type: image/"+ext+"\r\n");
+				binaryOut.writeBytes("Content-Type: image/"+n+"\r\n");
 				binaryOut.writeBytes("Content-Length: " + data.length);
 				binaryOut.writeBytes("\r\n\r\n");
 				binaryOut.write(data);
